@@ -5,11 +5,13 @@
 package com.pws.c5;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author IlhamRobbS
  */
-public interface repoCuci extends JpaRepository<Nyucidong,String> {
+public interface repoCuci extends JpaRepository<Nyucidong,Integer> {
+
     
 }

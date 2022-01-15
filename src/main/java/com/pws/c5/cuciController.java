@@ -6,16 +6,14 @@ package com.pws.c5;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -24,35 +22,42 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/datacuci")
+@RequestMapping(value = "/datacuci")
 public class cuciController {
+
     @Autowired
-     private repoCuci cuciatuh;
-     
-     @GetMapping("/cuciah")
-    public List<Nyucidong> getAllNyucidong(){
-        return cuciatuh.findAll();
+    repoCuci cuciah;
+            
+    @PostMapping("/add")
+    public Nyucidong addcuci(@RequestBody Nyucidong c)
+    {
+        cuciah.save(c);
+        return c;
     }
     
-    @GetMapping ("/cuciah/{idproduct}")
-    public Nyucidong getNyucidongById(@PathVariable String idproduct){
-        return cuciatuh.findById(idproduct).get();
+    @GetMapping("/all")
+    public List<Nyucidong> allcuci()
+    {
+        return cuciah.findAll();
     }
     
-    @PostMapping ("/cuciah")
-    public Nyucidong saveNyucidongDetails(@RequestBody Nyucidong c){
-        return cuciatuh.save(c);
+    @GetMapping("/allbyid")
+    public Nyucidong getcucibyid(@RequestParam int id)
+    {
+        return cuciah.findById(id).get();
     }
     
-    @PutMapping("/cuciah")
-    public Nyucidong updateNyucidong(@RequestBody Nyucidong c){
-        return cuciatuh.save(c);
+    @PutMapping("/edit")
+    public Nyucidong editcuci(@RequestBody Nyucidong c)
+    {
+       return cuciah.save(c);
     }
     
-    @DeleteMapping("/cuciah/{idproduct}")
-    public ResponseEntity<HttpStatus> deleteNyucidongById(@PathVariable String idproduct){
-        cuciatuh.deleteById(idproduct);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @DeleteMapping("/delete")
+    public List<Nyucidong> deletecuci(@RequestParam int id)
+    {
+        cuciah.deleteById(id);
+        List<Nyucidong> cucilist = cuciah.findAll();
+        return cucilist;
     }
-    
 }
